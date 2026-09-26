@@ -1,0 +1,7 @@
+{
+  "name": "Expense Buddy",
+  "description": "Simple, clean personal finance and IOU manager with multi-wallet transfers, WhatsApp debt reminders, savings goals, and monthly analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
