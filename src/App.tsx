@@ -10,6 +10,7 @@ import { AnalyticsView } from './components/AnalyticsView';
 import { RecurringExpensesView } from './components/RecurringExpensesView';
 import { LandingPage } from './components/LandingPage';
 import { LoginPage } from './components/LoginPage';
+import { OAuthConsentPage } from './components/OAuthConsentPage';
 import { AccountSetupWizard } from './components/AccountSetupWizard';
 import { WifiOff, Home } from 'lucide-react';
 
@@ -32,6 +33,11 @@ const MainAppContent: React.FC = () => {
       window.removeEventListener('offline', handleOffline);
     };
   }, []);
+
+  // Supabase OAuth server sends authorization requests to this path.
+  if (window.location.pathname === '/oauth/consent') {
+    return <OAuthConsentPage />;
+  }
 
   // 1. Landing Page (First destination for visitors)
   if (appScreen === 'landing') {

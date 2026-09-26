@@ -20,5 +20,6 @@ export const getSupabaseConfigError = () =>
 
 export const getOAuthRedirectUrl = () => {
   const configuredRedirect = import.meta.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL as string | undefined;
-  return configuredRedirect || window.location.origin;
+  const redirectUrl = configuredRedirect || window.location.origin;
+  return redirectUrl.replace(/\/$/, '');
 };
