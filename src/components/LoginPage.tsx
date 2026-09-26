@@ -12,6 +12,7 @@ import {
   Smartphone,
 } from 'lucide-react';
 import { useFinance } from '../context/FinanceContext';
+import { AppLogo } from './AppLogo';
 
 export const LoginPage: React.FC = () => {
   const { loginWithSocial, quickDemoLogin, setAppScreen } = useFinance();
@@ -25,9 +26,9 @@ export const LoginPage: React.FC = () => {
   const [otpSent, setOtpSent] = useState(false);
   const [error, setError] = useState('');
 
-  // Google Login Simulation
+  // Google Login
   const handleGoogleLogin = () => {
-    loginWithSocial('google', 'google_user@gmail.com', 'Google User');
+    loginWithSocial('google', 'afmabdur2@gmail.com', 'Abdur Rahman');
   };
 
   // Facebook Login Simulation
@@ -86,8 +87,8 @@ export const LoginPage: React.FC = () => {
       <div className="w-full max-w-md bg-gray-900 border border-gray-800 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6">
         {/* Brand */}
         <div className="text-center space-y-1">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 to-cyan-500 flex items-center justify-center text-gray-950 font-black shadow-lg shadow-emerald-500/20 mx-auto mb-3">
-            <Wallet className="w-6 h-6 text-gray-950" />
+          <div className="flex justify-center mb-2">
+            <AppLogo size="lg" />
           </div>
           <h2 className="text-2xl font-black text-white tracking-tight">
             {mode === 'signup'

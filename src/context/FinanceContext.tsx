@@ -23,6 +23,7 @@ import {
   INITIAL_USER_EMAIL,
 } from '../utils/demoData';
 import { getCurrencyConfig } from '../utils/formatters';
+import { generateGoogleAvatar } from '../utils/avatarUtils';
 
 export type AppScreen = 'landing' | 'login' | 'setup' | 'app';
 
@@ -174,7 +175,12 @@ export const FinanceProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const raw = localStorage.getItem(`${STORAGE_KEY_PREFIX}user_${currentUserEmail}`);
     if (raw) {
       try {
-        return JSON.parse(raw);
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed.avatar === 'string' && parsed.avatar.includes('unsplash')) {
+          parsed.avatar = generateGoogleAvatar(parsed.fullName || currentUserEmail, currentUserEmail);
+          localStorage.setItem(`${STORAGE_KEY_PREFIX}user_${currentUserEmail}`, JSON.stringify(parsed));
+        }
+        return parsed;
       } catch {
         return createDefaultProfile(currentUserEmail);
       }
@@ -326,6 +332,10 @@ export const FinanceProvider: React.FC<{ children: React.ReactNode }> = ({ child
     if (existingUserRaw) {
       try {
         const parsed = JSON.parse(existingUserRaw);
+        if (parsed && typeof parsed.avatar === 'string' && parsed.avatar.includes('unsplash')) {
+          parsed.avatar = generateGoogleAvatar(parsed.fullName || cleanId, cleanId);
+          localStorage.setItem(`${STORAGE_KEY_PREFIX}user_${cleanId}`, JSON.stringify(parsed));
+        }
         setUser(parsed);
         setIsNewUserOnboarding(false);
 
@@ -365,7 +375,7 @@ export const FinanceProvider: React.FC<{ children: React.ReactNode }> = ({ child
       fullName: profileData.fullName || currentUserEmail.split('@')[0],
       avatar:
         profileData.avatar ||
-        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+        generateGoogleAvatar(profileData.fullName || currentUserEmail, currentUserEmail),
       phone: profileData.phone || '+8801700000000',
       currency,
       currencySymbol: config.symbol,
@@ -441,7 +451,7 @@ export const FinanceProvider: React.FC<{ children: React.ReactNode }> = ({ child
       fullName: data.fullName || currentUserEmail.split('@')[0],
       avatar:
         data.avatar ||
-        'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+        generateGoogleAvatar(data.fullName || currentUserEmail, currentUserEmail),
       phone: data.phone || '+8801700000000',
       currency,
       currencySymbol: config.symbol,

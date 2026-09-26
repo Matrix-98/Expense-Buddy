@@ -1,4 +1,5 @@
 import { DebtRecord, RecurringExpense, SavingsGoal, Transaction, UserProfile, Wallet } from '../types/finance';
+import { generateGoogleAvatar } from './avatarUtils';
 
 export const INITIAL_USER_EMAIL = 'afmabdur2@gmail.com';
 
@@ -7,7 +8,7 @@ export function createDefaultProfile(email: string = INITIAL_USER_EMAIL): UserPr
     id: `user_${Date.now()}`,
     email,
     fullName: 'Abdur Rahman',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    avatar: generateGoogleAvatar('Abdur Rahman', email),
     phone: '+8801711223344',
     currency: 'BDT',
     currencySymbol: '৳',

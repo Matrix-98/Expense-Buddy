@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { useFinance } from '../context/FinanceContext';
 import { PWAInstallButton } from './PWAInstallButton';
+import { AppLogo } from './AppLogo';
 
 export const LandingPage: React.FC = () => {
   const { setAppScreen, quickDemoLogin } = useFinance();
@@ -26,14 +27,12 @@ export const LandingPage: React.FC = () => {
       <header className="sticky top-0 z-40 bg-gray-950/80 backdrop-blur-xl border-b border-gray-800/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-cyan-500 flex items-center justify-center text-gray-950 font-black shadow-lg shadow-emerald-500/20">
-              <Wallet className="w-5 h-5 text-gray-950" />
-            </div>
+            <AppLogo size="sm" />
             <div>
-              <span className="text-base font-extrabold text-white tracking-tight">
+              <span className="text-base font-extrabold text-white tracking-tight leading-none block">
                 Expense Buddy
               </span>
-              <span className="block text-[10px] text-emerald-400 font-medium tracking-wider uppercase">
+              <span className="block text-[10px] text-emerald-400 font-semibold tracking-wider uppercase mt-0.5">
                 Finance & IOU Made Simple
               </span>
             </div>
@@ -64,6 +63,20 @@ export const LandingPage: React.FC = () => {
         <div className="absolute top-1/3 left-1/3 w-80 h-80 bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none" />
 
         <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center space-y-6 relative">
+          {/* Mascot Brand Hero Feature */}
+          <div className="flex justify-center">
+            <div className="relative group">
+              <div className="absolute inset-0 bg-emerald-500/20 blur-2xl rounded-full scale-110 pointer-events-none" />
+              <div className="w-28 h-28 sm:w-36 sm:h-36 mx-auto relative drop-shadow-2xl transition-transform hover:scale-105 duration-300">
+                <img
+                  src="/logo.svg"
+                  alt="Expense Buddy Mascot"
+                  className="w-full h-full object-contain filter drop-shadow-[0_10px_20px_rgba(16,185,129,0.25)]"
+                />
+              </div>
+            </div>
+          </div>
+
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Effortless Money & Debt Tracking</span>

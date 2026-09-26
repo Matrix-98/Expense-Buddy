@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { X, FileSpreadsheet, Printer, Download, Clock, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { useFinance } from '../context/FinanceContext';
 import { formatCurrency, formatDate, formatMonthYear } from '../utils/formatters';
+import { AppLogo } from './AppLogo';
 
 interface ExportReportModalProps {
   isOpen: boolean;
@@ -158,14 +159,17 @@ export const ExportReportModal: React.FC<ExportReportModalProps> = ({ isOpen, on
           >
             {/* Document Header (Req 7.5) */}
             <div className="border-b border-gray-800 print:border-gray-300 pb-5">
-              <div className="flex items-start justify-between">
-                <div>
-                  <h1 className="text-2xl font-black text-white print:text-black tracking-tight">
-                    Expense Buddy Financial Statement
-                  </h1>
-                  <p className="text-xs text-gray-400 print:text-gray-600 mt-1">
-                    Monthly Performance, Wallet Balances & IOU Ledger
-                  </p>
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <AppLogo size="md" />
+                  <div>
+                    <h1 className="text-xl sm:text-2xl font-black text-white print:text-black tracking-tight leading-tight">
+                      Expense Buddy Financial Statement
+                    </h1>
+                    <p className="text-xs text-gray-400 print:text-gray-600 mt-0.5">
+                      Monthly Performance, Wallet Balances & IOU Ledger
+                    </p>
+                  </div>
                 </div>
                 <div className="text-right">
                   <span className="inline-block px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 font-bold text-xs">

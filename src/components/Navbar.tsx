@@ -24,6 +24,7 @@ import { ProfileModal } from './ProfileModal';
 import { ExportReportModal } from './ExportReportModal';
 import { TransferModal } from './Modals/TransferModal';
 import { TransactionModal } from './Modals/TransactionModal';
+import { AppLogo } from './AppLogo';
 
 export type NavTab =
   | 'dashboard'
@@ -105,19 +106,17 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab }) => {
       <header className="sticky top-0 z-40 bg-gray-950/80 backdrop-blur-xl border-b border-gray-800/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 gap-3">
-            {/* Logo & Brand */}
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-cyan-500 flex items-center justify-center text-gray-950 font-black shadow-lg shadow-emerald-500/20">
-                <Wallet className="w-5 h-5 text-gray-950" />
-              </div>
+            {/* Logo & Brand with Mascot */}
+            <div className="flex items-center gap-2.5">
+              <AppLogo size="sm" />
               <div>
-                <h1 className="text-base font-extrabold text-white tracking-tight flex items-center gap-1.5">
+                <h1 className="text-base font-extrabold text-white tracking-tight flex items-center gap-1.5 leading-none">
                   <span>{getTranslation('appName', language)}</span>
                   <span className="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                    Smart
+                    Pro
                   </span>
                 </h1>
-                <p className="text-[11px] text-gray-400">
+                <p className="text-[11px] text-gray-400 mt-0.5">
                   {getTranslation('appSubtitle', language)}
                 </p>
               </div>

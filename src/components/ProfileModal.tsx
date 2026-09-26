@@ -3,15 +3,7 @@ import { X, User, Phone, DollarSign, LogOut, Check, Image as ImageIcon, Mail } f
 import { useFinance } from '../context/FinanceContext';
 import { CURRENCY_LIST } from '../utils/formatters';
 import { CurrencyCode } from '../types/finance';
-
-const AVATAR_OPTIONS = [
-  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&auto=format&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
-];
+import { AvatarPicker } from './AvatarPicker';
 
 interface ProfileModalProps {
   isOpen: boolean;
@@ -25,8 +17,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) =
   const [phone, setPhone] = useState(user?.phone || '');
   const [currency, setCurrency] = useState<CurrencyCode>(user?.currency || 'BDT');
   const [monthlyBudget, setMonthlyBudget] = useState(String(user?.monthlyBudget || 75000));
-  const [selectedAvatar, setSelectedAvatar] = useState(user?.avatar || AVATAR_OPTIONS[0]);
-  const [customAvatarUrl, setCustomAvatarUrl] = useState('');
+  const [selectedAvatar, setSelectedAvatar] = useState(user?.avatar || '');
   const [switchEmail, setSwitchEmail] = useState('');
   const [showSwitchEmail, setShowSwitchEmail] = useState(false);
 
@@ -38,7 +29,7 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) =
       fullName: fullName.trim() || user.fullName,
       phone: phone.trim() || user.phone,
       currency,
-      avatar: customAvatarUrl.trim() || selectedAvatar,
+      avatar: selectedAvatar || user.avatar,
       monthlyBudget: Number(monthlyBudget) || user.monthlyBudget,
     });
     onClose();
@@ -95,39 +86,14 @@ export const ProfileModal: React.FC<ProfileModalProps> = ({ isOpen, onClose }) =
           {/* Avatar Picker */}
           <div>
             <label className="block text-xs font-semibold text-gray-300 mb-2 flex items-center gap-1.5">
-              <ImageIcon className="w-3.5 h-3.5 text-gray-400" />
-              Profile Photo / Avatar
+              <ImageIcon className="w-3.5 h-3.5 text-emerald-400" />
+              Profile Photo (Emoji, Google Account, or Upload)
             </label>
-            <div className="flex items-center gap-3 overflow-x-auto pb-1">
-              {AVATAR_OPTIONS.map((url, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => {
-                    setSelectedAvatar(url);
-                    setCustomAvatarUrl('');
-                  }}
-                  className={`relative w-11 h-11 rounded-full overflow-hidden shrink-0 border-2 transition ${
-                    selectedAvatar === url && !customAvatarUrl
-                      ? 'border-emerald-500 scale-105'
-                      : 'border-transparent opacity-60 hover:opacity-100'
-                  }`}
-                >
-                  <img src={url} alt={`Avatar ${idx}`} className="w-full h-full object-cover" />
-                  {selectedAvatar === url && !customAvatarUrl && (
-                    <div className="absolute inset-0 bg-emerald-500/20 flex items-center justify-center">
-                      <Check className="w-4 h-4 text-white" />
-                    </div>
-                  )}
-                </button>
-              ))}
-            </div>
-            <input
-              type="text"
-              value={customAvatarUrl}
-              onChange={(e) => setCustomAvatarUrl(e.target.value)}
-              placeholder="Or enter custom image URL"
-              className="mt-2 w-full px-3 py-1.5 text-xs rounded-lg bg-gray-800/60 border border-gray-700 text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+            <AvatarPicker
+              currentAvatar={selectedAvatar}
+              onSelectAvatar={(newAvatar) => setSelectedAvatar(newAvatar)}
+              userName={fullName}
+              userEmail={currentUserEmail}
             />
           </div>
 

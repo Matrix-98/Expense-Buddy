@@ -76,7 +76,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     repay: 'Log Repayment',
   },
   bn: {
-    appName: 'এক্সপেন্স বাডি',
+    appName: 'Expense Buddy',
     appSubtitle: 'সহজ হিসাব ও দেনা-পাওনা ট্র্যাকার',
     dashboard: 'ড্যাশবোর্ড',
     wallets: 'ওয়ালেট ও ব্যাংক',
@@ -142,7 +142,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     repay: 'পরিশোধ লিপিবদ্ধ করুন',
   },
   ar: {
-    appName: 'رفيق المصاريف',
+    appName: 'Expense Buddy',
     appSubtitle: 'إدارة الأموال والديون بكل سهولة',
     dashboard: 'لوحة التحكم',
     wallets: 'المحافظ والحسابات',
@@ -208,7 +208,7 @@ export const TRANSLATIONS: Record<LanguageCode, Record<string, string>> = {
     repay: 'تسجيل سداد',
   },
   hi: {
-    appName: 'एक्सपेंस बडी',
+    appName: 'Expense Buddy',
     appSubtitle: 'सरल व्यक्तिगत वित्त और उधारी प्रबंधक',
     dashboard: 'डैशबोर्ड',
     wallets: 'वॉलेट्स और बैंक',

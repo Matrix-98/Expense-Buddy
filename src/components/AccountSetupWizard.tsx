@@ -18,14 +18,9 @@ import {
 import { useFinance, InitialWalletSetupItem } from '../context/FinanceContext';
 import { CURRENCY_LIST, formatCurrency } from '../utils/formatters';
 import { CurrencyCode, WalletType } from '../types/finance';
-
-const AVATARS = [
-  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&auto=format&fit=crop&q=80',
-  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
-];
+import { AvatarPicker } from './AvatarPicker';
+import { generateGoogleAvatar } from '../utils/avatarUtils';
+import { AppLogo } from './AppLogo';
 
 export const AccountSetupWizard: React.FC = () => {
   const { currentUserEmail, setupInitialAccount } = useFinance();
@@ -36,7 +31,9 @@ export const AccountSetupWizard: React.FC = () => {
   const [fullName, setFullName] = useState('Abdur Rahman');
   const [phone, setPhone] = useState('+8801711223344');
   const [currency, setCurrency] = useState<CurrencyCode>('BDT'); // Default BDT
-  const [avatar, setAvatar] = useState(AVATARS[0]);
+  const [avatar, setAvatar] = useState(() =>
+    generateGoogleAvatar('Abdur Rahman', currentUserEmail)
+  );
 
   // Initial Wallets Setup (Requirement: adjust their balances to begin their account and give bank accounts)
   const [walletsList, setWalletsList] = useState<InitialWalletSetupItem[]>([
@@ -131,9 +128,7 @@ export const AccountSetupWizard: React.FC = () => {
         {/* Wizard Header */}
         <div className="flex items-center justify-between border-b border-gray-800 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-500 to-cyan-500 flex items-center justify-center text-gray-950 font-black shadow-lg shadow-emerald-500/20">
-              <Sparkles className="w-5 h-5 text-gray-950" />
-            </div>
+            <AppLogo size="sm" />
             <div>
               <h2 className="text-xl font-bold text-white tracking-tight">
                 {step === 1 ? '1. Personal Profile' : '2. Adjust Starting Balances'}
@@ -182,29 +177,14 @@ export const AccountSetupWizard: React.FC = () => {
             {/* Avatar selector */}
             <div>
               <label className="block text-xs font-semibold text-gray-300 mb-2">
-                Choose Profile Photo
+                Choose Profile Photo (Emoji, Google Account, or Upload)
               </label>
-              <div className="flex items-center gap-3 overflow-x-auto pb-1">
-                {AVATARS.map((url, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => setAvatar(url)}
-                    className={`relative w-12 h-12 rounded-full overflow-hidden shrink-0 border-2 transition ${
-                      avatar === url
-                        ? 'border-emerald-500 scale-105 shadow-md shadow-emerald-500/20'
-                        : 'border-transparent opacity-60 hover:opacity-100'
-                    }`}
-                  >
-                    <img src={url} alt={`Avatar ${idx}`} className="w-full h-full object-cover" />
-                    {avatar === url && (
-                      <div className="absolute inset-0 bg-emerald-500/20 flex items-center justify-center">
-                        <Check className="w-4 h-4 text-white" />
-                      </div>
-                    )}
-                  </button>
-                ))}
-              </div>
+              <AvatarPicker
+                currentAvatar={avatar}
+                onSelectAvatar={(newAvatar) => setAvatar(newAvatar)}
+                userName={fullName}
+                userEmail={currentUserEmail}
+              />
             </div>
 
             {/* Preferred Currency - Default BDT */}
