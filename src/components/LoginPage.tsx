@@ -25,11 +25,20 @@ export const LoginPage: React.FC = () => {
   const [otpCode, setOtpCode] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [error, setError] = useState('');
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
   // Google Login
-  const handleGoogleLogin = () => {
-    loginWithSocial('google', 'afmabdur2@gmail.com', 'Abdur Rahman');
+  const handleGoogleLogin = async () => {
+    setError('');
+    setIsGoogleLoading(true);
+    try {
+      await loginWithSocial('google', 'google-oauth');
+    } catch (oauthError) {
+      setError(oauthError instanceof Error ? oauthError.message : 'Google sign-in could not be started.');
+      setIsGoogleLoading(false);
+    }
   };
+
 
   // Facebook Login Simulation
   const handleFacebookLogin = () => {
@@ -129,7 +138,8 @@ export const LoginPage: React.FC = () => {
             {/* Google */}
             <button
               onClick={handleGoogleLogin}
-              className="w-full py-2.5 px-4 rounded-xl bg-gray-800 hover:bg-gray-750 text-white border border-gray-700 font-semibold text-xs flex items-center justify-center gap-3 transition active:scale-[0.98]"
+              disabled={isGoogleLoading}
+              className="w-full py-2.5 px-4 rounded-xl bg-gray-800 hover:bg-gray-750 disabled:opacity-60 disabled:cursor-wait text-white border border-gray-700 font-semibold text-xs flex items-center justify-center gap-3 transition active:scale-[0.98]"
             >
               <svg className="w-4 h-4" viewBox="0 0 24 24">
                 <path
@@ -149,7 +159,7 @@ export const LoginPage: React.FC = () => {
                   d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"
                 />
               </svg>
-              <span>Continue with Google</span>
+              <span>{isGoogleLoading ? 'Opening Google sign-in…' : 'Continue with Google'}</span>
             </button>
 
             {/* Facebook */}
