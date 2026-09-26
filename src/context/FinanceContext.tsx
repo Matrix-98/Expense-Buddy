@@ -24,6 +24,7 @@ import {
 } from '../utils/demoData';
 import { getCurrencyConfig } from '../utils/formatters';
 import { generateGoogleAvatar } from '../utils/avatarUtils';
+import { getOAuthRedirectUrl, getSupabaseConfigError, supabase } from '../lib/supabase';
 
 export type AppScreen = 'landing' | 'login' | 'setup' | 'app';
 
@@ -319,11 +320,29 @@ export const FinanceProvider: React.FC<{ children: React.ReactNode }> = ({ child
   }, [recurringExpenses, currentUserEmail]);
 
   // Social / Phone Login handler
-  const loginWithSocial = (
+  const loginWithSocial = async (
     provider: 'google' | 'facebook' | 'phone' | 'email',
     identity: string,
     displayName?: string
   ) => {
+    if (provider === 'google') {
+      if (!supabase) {
+        throw new Error(getSupabaseConfigError());
+      }
+
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: getOAuthRedirectUrl(),
+        },
+      });
+
+      if (error) {
+        throw error;
+      }
+      return;
+    }
+
     const cleanId = identity.trim().toLowerCase();
     setCurrentUserEmail(cleanId);
     localStorage.setItem('expensebuddy_has_visited', 'true');
